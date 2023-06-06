@@ -2,10 +2,7 @@ package com.epptec.databazeosob;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/databaze")
@@ -16,5 +13,12 @@ public class DatabazeController {
     public ResponseEntity<?> pridejOsobu(@RequestBody Osoba osoba)  {
         return databazeService.pridejOsobu(osoba);
     }
-
+    @DeleteMapping("/odeber")
+    public ResponseEntity<?> odeberOsobu(@RequestParam String rodneCislo) {
+        return databazeService.odeberOsobu(rodneCislo);
+    }
+    @GetMapping("/vyhledej")
+    public ResponseEntity<?> vyhledejOsobu(@RequestParam String rodneCislo) {
+        return databazeService.vyhledejOsobu(rodneCislo);
+    }
 }

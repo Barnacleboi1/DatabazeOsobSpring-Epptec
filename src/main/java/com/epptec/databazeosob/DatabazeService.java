@@ -24,4 +24,19 @@ public class DatabazeService {
             return ResponseEntity.ok("Osoba byla přidána úspěšně.");
         }
     }
+    public ResponseEntity<?> odeberOsobu(String rodneCislo) {
+        if (!databaze.containsKey(rodneCislo)) {
+            return new ResponseEntity<>(Map.of("Chyba", "Tato osoba v databázi není"), HttpStatus.BAD_REQUEST);
+        } else {
+            databaze.remove(rodneCislo);
+            return ResponseEntity.ok("Osoba byla úspěšně odebrána");
+        }
+    }
+    public ResponseEntity<?> vyhledejOsobu(String rodneCislo) {
+        if (!databaze.containsKey(rodneCislo)) {
+            return new ResponseEntity<>(Map.of("Chyba", "Tato osoba v databázi není"), HttpStatus.BAD_REQUEST);
+        } else {
+            return ResponseEntity.ok(databaze.get(rodneCislo));
+        }
+    }
 }
