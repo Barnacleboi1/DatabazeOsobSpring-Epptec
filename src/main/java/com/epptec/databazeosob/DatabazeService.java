@@ -25,6 +25,7 @@ public class DatabazeService {
         }
     }
     public ResponseEntity<?> odeberOsobu(String rodneCislo) {
+        rodneCislo = rodneCislo.replace("/", "");
         if (!databaze.containsKey(rodneCislo)) {
             return new ResponseEntity<>(Map.of("Chyba", "Tato osoba v databázi není"), HttpStatus.BAD_REQUEST);
         } else {
@@ -33,6 +34,7 @@ public class DatabazeService {
         }
     }
     public ResponseEntity<?> vyhledejOsobu(String rodneCislo) {
+        rodneCislo = rodneCislo.replace("/", "");
         if (!databaze.containsKey(rodneCislo)) {
             return new ResponseEntity<>(Map.of("Chyba", "Tato osoba v databázi není"), HttpStatus.BAD_REQUEST);
         } else {
