@@ -14,11 +14,10 @@ public class DatabazeService {
     private Map<String, Osoba> databaze = new HashMap<>();
     public ResponseEntity<?> pridejOsobu(Osoba osoba) {
         if (!osoba.getRodneCislo().matches("\\d{6}/?\\d{4}")) {
-            return new ResponseEntity<>(Map.of("Chyba", "Rodné číslo musí být ve formátu YYMMDD/XXX nebo YYMMDDXXX")
-                    , HttpStatus.BAD_REQUEST);
+            throw new IllegalArgumentException("Zadávejte rodné číslo ve formátu YYMMDDXXXX nebo YYMMDD/XXXX.");
         }
         if (databaze.containsKey(osoba.getRodneCislo())) {
-            return new ResponseEntity<>(Map.of("Chyba", "Tato osoba už v databázi je."), HttpStatus.BAD_REQUEST);
+            throw new IllegalArgumentException("Tato osoba již v databázi je.");
         } else {
             databaze.put(osoba.getRodneCislo(), osoba);
             return ResponseEntity.ok("Osoba byla přidána úspěšně.");
@@ -27,7 +26,7 @@ public class DatabazeService {
     public ResponseEntity<?> odeberOsobu(String rodneCislo) {
         rodneCislo = rodneCislo.replace("/", "");
         if (!databaze.containsKey(rodneCislo)) {
-            return new ResponseEntity<>(Map.of("Chyba", "Tato osoba v databázi není"), HttpStatus.BAD_REQUEST);
+            throw new IllegalArgumentException("Tato osoba v databázi není.");
         } else {
             databaze.remove(rodneCislo);
             return ResponseEntity.ok("Osoba byla úspěšně odebrána");
@@ -36,7 +35,7 @@ public class DatabazeService {
     public ResponseEntity<?> vyhledejOsobu(String rodneCislo) {
         rodneCislo = rodneCislo.replace("/", "");
         if (!databaze.containsKey(rodneCislo)) {
-            return new ResponseEntity<>(Map.of("Chyba", "Tato osoba v databázi není"), HttpStatus.BAD_REQUEST);
+            throw new IllegalArgumentException("Tato osoba v databázi není.");
         } else {
             return ResponseEntity.ok(databaze.get(rodneCislo));
         }
